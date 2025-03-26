@@ -2,9 +2,9 @@
 // randomly selecting images, titles, and quotes. It defines variables, event 
 // listeners, and functions to support this functionality.
 
-// query selector variables go here 👇
+// Query Selectors
 
-//Elements
+//DOM Elements
 let imageElement = document.querySelector('.poster-img');
 let titleElement = document.querySelector('.poster-title');
 let quoteElement = document.querySelector('.poster-quote');
@@ -19,8 +19,7 @@ let showMainBtn = document.querySelector('.show-main')
 let showSavedBtn = document.querySelector('.show-saved')
 let backToMainBtn = document.querySelector('.back-to-main')
 
-// we've provided you with some data to work with 👇
-// tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
+//Data (Images, Titles, and Quotes)
 var images = [
   "./assets/bees.jpg",
   "./assets/bridge.jpg",
@@ -118,10 +117,11 @@ var quotes = [
   "Each person must live their life as a model for others.",
   "A champion is defined not by their wins but by how they can recover when they fall."
 ];
-var savedPosters = []; //An arrray that stores posters that the user has saved
-var currentPoster; //A varible that holds the currently displayed poster
 
-// event listeners go here 👇
+var savedPosters = []; //Stores Saved Posters
+var currentPoster; // Undefined variable - Could be set to help save posters?
+
+// Event Listeners
 window.addEventListener('load', function() {
   randomImage();
   randomTitle();
@@ -144,15 +144,14 @@ backToMainBtn.addEventListener('click', backMainPage)
 
 
 
-// functions and event handlers go here 👇
+// Functions/Event Handlers
 
+//Selects Random Index Funtion
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
 
-//Creates a new poster object
-// id=Date.now() - creates an unique id for each poster - when saved each poster will have 
-// a differnt id
+//Creates Random Poster
 function createPoster(imageURL, title, quote) {
   return {
     id: Date.now(), 
@@ -161,6 +160,7 @@ function createPoster(imageURL, title, quote) {
     quote: quote}
 }
 
+// Functions that Generate Random Images, Title, and Quotes
 function randomImage() {
   randomImageURL = images[getRandomIndex(images)]
   imageElement.src = randomImageURL
@@ -176,6 +176,7 @@ function randomQuote() {
   quoteElement.innerText = randomQuoteText
 }
 
+//Funtions that Show and Hide Pages
 function showMakePosterPage() {
   posterFormSection.classList.remove('hidden')
   mainPosterSection.classList.add('hidden')
