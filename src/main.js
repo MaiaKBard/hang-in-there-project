@@ -1,4 +1,23 @@
+// This JavaScript file is used to create and manage inspirational posters by 
+// randomly selecting images, titles, and quotes. It defines variables, event 
+// listeners, and functions to support this functionality.
+
 // query selector variables go here 👇
+
+//Elements
+let imageElement = document.querySelector('.poster-img');
+let titleElement = document.querySelector('.poster-title');
+let quoteElement = document.querySelector('.poster-quote');
+let randomPosterElement = document.querySelector('.show-random')
+//Section
+let posterFormSection = document.querySelector('.poster-form')
+let mainPosterSection = document.querySelector('.main-poster')
+let savedPosterSection = document.querySelector('.saved-posters')
+//Button
+let ownPosterBtn = document.querySelector('.show-form')
+let showMainBtn = document.querySelector('.show-main')
+let showSavedBtn = document.querySelector('.show-saved')
+let backToMainBtn = document.querySelector('.back-to-main')
 
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
@@ -99,21 +118,80 @@ var quotes = [
   "Each person must live their life as a model for others.",
   "A champion is defined not by their wins but by how they can recover when they fall."
 ];
-var savedPosters = [];
-var currentPoster;
+var savedPosters = []; //An arrray that stores posters that the user has saved
+var currentPoster; //A varible that holds the currently displayed poster
 
 // event listeners go here 👇
+window.addEventListener('load', function() {
+  randomImage();
+  randomTitle();
+  randomQuote();
+})
+
+randomPosterElement.addEventListener('click', function() {
+  randomImage();
+  randomTitle();
+  randomQuote();
+})
+
+ownPosterBtn.addEventListener('click', showMakePosterPage)
+
+showMainBtn.addEventListener('click', showMainPage)
+
+showSavedBtn.addEventListener('click', showSavedPostersPage)
+
+backToMainBtn.addEventListener('click', backMainPage)
+
+
 
 // functions and event handlers go here 👇
-// (we've provided two to get you started)!
+
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
 
+//Creates a new poster object
+// id=Date.now() - creates an unique id for each poster - when saved each poster will have 
+// a differnt id
 function createPoster(imageURL, title, quote) {
   return {
     id: Date.now(), 
     imageURL: imageURL, 
     title: title, 
     quote: quote}
+}
+
+function randomImage() {
+  randomImageURL = images[getRandomIndex(images)]
+  imageElement.src = randomImageURL
+}
+
+function randomTitle() {
+  randomTitleText = titles[getRandomIndex(titles)]
+  titleElement.innerText = randomTitleText
+}
+
+function randomQuote() {
+  randomQuoteText = quotes[getRandomIndex(quotes)]
+  quoteElement.innerText = randomQuoteText
+}
+
+function showMakePosterPage() {
+  posterFormSection.classList.remove('hidden')
+  mainPosterSection.classList.add('hidden')
+}
+
+function showMainPage() {
+  mainPosterSection.classList.remove('hidden')
+  posterFormSection.classList.add('hidden')
+}
+
+function showSavedPostersPage() {
+  savedPosterSection.classList.remove('hidden')
+  mainPosterSection.classList.add('hidden')
+}
+
+function backMainPage() {
+  mainPosterSection.classList.remove('hidden')
+  savedPosterSection.classList.add('hidden')
 }

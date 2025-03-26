@@ -44,7 +44,7 @@ button:hover {
   flex-direction: column;
   justify-content: center;
   margin: 20px auto;
-  padding: 50px 20px;
+  padding: 60px 20px;
   width: 70%;
 }
 
@@ -62,7 +62,7 @@ button:hover {
 }
 
 .poster-title {
-  font-size: 60px;
+  font-size: 5vw;
   font-weight: normal;
   letter-spacing: 20px;
   margin-bottom: 10px;
