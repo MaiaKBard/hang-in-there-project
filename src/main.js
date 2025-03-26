@@ -8,12 +8,12 @@
 let imageElement = document.querySelector('.poster-img');
 let titleElement = document.querySelector('.poster-title');
 let quoteElement = document.querySelector('.poster-quote');
-let randomPosterElement = document.querySelector('.show-random')
 //Section
 let posterFormSection = document.querySelector('.poster-form')
 let mainPosterSection = document.querySelector('.main-poster')
 let savedPosterSection = document.querySelector('.saved-posters')
 //Button
+let showRandomBtn = document.querySelector('.show-random')
 let ownPosterBtn = document.querySelector('.show-form')
 let showMainBtn = document.querySelector('.show-main')
 let showSavedBtn = document.querySelector('.show-saved')
@@ -119,20 +119,12 @@ var quotes = [
 ];
 
 var savedPosters = []; //Stores Saved Posters
-var currentPoster; // Undefined variable - Could be set to help save posters?
+var currentPoster; // Undefined variable - Can use to set a current poster - possibly when displayed or when saved?
 
 // Event Listeners
-window.addEventListener('load', function() {
-  randomImage();
-  randomTitle();
-  randomQuote();
-})
+window.addEventListener('load', generatesRandomPoster)
 
-randomPosterElement.addEventListener('click', function() {
-  randomImage();
-  randomTitle();
-  randomQuote();
-})
+showRandomBtn.addEventListener('click', generatesRandomPoster)
 
 ownPosterBtn.addEventListener('click', showMakePosterPage)
 
@@ -151,29 +143,28 @@ function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
 
-//Creates Random Poster
+function generatesRandomPoster() {
+  randomImageURL = images[getRandomIndex(images)]
+  randomTitleText = titles[getRandomIndex(titles)]
+  randomQuoteText = quotes[getRandomIndex(quotes)]
+
+  currentPoster = createPoster(randomImageURL, randomTitleText, randomQuoteText)
+  updatesPosterDisplay(currentPoster)
+}
+
+function updatesPosterDisplay(poster) {
+  imageElement.src = randomImageURL
+  titleElement.innerText = randomTitleText
+  quoteElement.innerText = randomQuoteText
+}
+
+//Creates Poster
 function createPoster(imageURL, title, quote) {
   return {
     id: Date.now(), 
     imageURL: imageURL, 
     title: title, 
     quote: quote}
-}
-
-// Functions that Generate Random Images, Title, and Quotes
-function randomImage() {
-  randomImageURL = images[getRandomIndex(images)]
-  imageElement.src = randomImageURL
-}
-
-function randomTitle() {
-  randomTitleText = titles[getRandomIndex(titles)]
-  titleElement.innerText = randomTitleText
-}
-
-function randomQuote() {
-  randomQuoteText = quotes[getRandomIndex(quotes)]
-  quoteElement.innerText = randomQuoteText
 }
 
 //Funtions that Show and Hide Pages
