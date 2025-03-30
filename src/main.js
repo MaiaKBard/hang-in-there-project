@@ -8,6 +8,10 @@
 let imageElement = document.querySelector('.poster-img');
 let titleElement = document.querySelector('.poster-title');
 let quoteElement = document.querySelector('.poster-quote');
+  // - Input elements
+let posterImageURL = document.querySelector('#poster-image-url')
+let posterTitle = document.querySelector('#poster-title')
+let posterQuote = document.querySelector('#poster-quote')
 //Section
 let posterFormSection = document.querySelector('.poster-form')
 let mainPosterSection = document.querySelector('.main-poster')
@@ -18,6 +22,9 @@ let ownPosterBtn = document.querySelector('.show-form')
 let showMainBtn = document.querySelector('.show-main')
 let showSavedBtn = document.querySelector('.show-saved')
 let backToMainBtn = document.querySelector('.back-to-main')
+let makePosterBtn = document.querySelector('.make-poster')
+
+
 
 //Data (Images, Titles, and Quotes)
 var images = [
@@ -146,6 +153,16 @@ backToMainBtn.addEventListener('click',function() {
   addHidden(savedPosterSection)
 })
 
+makePosterBtn.addEventListener('click', function(event) {
+  event.preventDefault()
+  addsToArrays()
+  createsUserPoster()
+  removeHidden(mainPosterSection)
+  addHidden(posterFormSection)
+  
+
+})  
+
 
 
 // Functions/Event Handlers
@@ -165,9 +182,9 @@ function generatesRandomPoster() {
 }
 
 function updatesPosterDisplay(poster) {
-  imageElement.src = randomImageURL
-  titleElement.innerText = randomTitleText
-  quoteElement.innerText = randomQuoteText
+  imageElement.src = poster.imageURL
+  titleElement.innerText = poster.title
+  quoteElement.innerText = poster.quote
 }
 
 //Creates Poster
@@ -187,3 +204,31 @@ function removeHidden(element) {
 function addHidden(element) {
   element.classList.add('hidden')
 }
+
+// funtion that takes the input values and creates a new poster and saves it currentPoster
+function createsUserPoster() {
+  currentPoster = createPoster(posterImageURL.value, posterTitle.value, posterQuote.value)
+  updatesPosterDisplay(currentPoster)
+}
+
+function addsToArrays() {
+  if (posterImageURL.value && posterTitle.value && posterQuote.value) {
+    images.push(posterImageURL.value);
+    titles.push(posterTitle.value);
+    quotes.push(posterQuote.value);
+    console.log("Data added successfully!");
+  } else {
+    console.log("Please fill in all fields.");
+  }
+}
+
+
+// function isValidURL(input) {
+//   try {
+//     new URL(input)
+//     return true
+//   } catch (err) {
+//     return false
+//   }
+// }
+
