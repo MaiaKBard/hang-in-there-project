@@ -126,13 +126,25 @@ window.addEventListener('load', generatesRandomPoster)
 
 showRandomBtn.addEventListener('click', generatesRandomPoster)
 
-ownPosterBtn.addEventListener('click', showMakePosterPage)
+ownPosterBtn.addEventListener('click', function() {
+  removeHidden(posterFormSection)
+  addHidden(mainPosterSection)
+})
 
-showMainBtn.addEventListener('click', showMainPage)
+showMainBtn.addEventListener('click', function() {
+  removeHidden(mainPosterSection)
+  addHidden(posterFormSection)
+})
 
-showSavedBtn.addEventListener('click', showSavedPostersPage)
+showSavedBtn.addEventListener('click', function() {
+  removeHidden(savedPosterSection)
+  addHidden(mainPosterSection)
+})
 
-backToMainBtn.addEventListener('click', backMainPage)
+backToMainBtn.addEventListener('click',function() {
+  removeHidden(mainPosterSection)
+  addHidden(savedPosterSection)
+})
 
 
 
@@ -167,23 +179,11 @@ function createPoster(imageURL, title, quote) {
     quote: quote}
 }
 
-//Funtions that Show and Hide Pages
-function showMakePosterPage() {
-  posterFormSection.classList.remove('hidden')
-  mainPosterSection.classList.add('hidden')
+//Funtions that Remove & Add 'hidden' from an html element
+function removeHidden(element) {
+  element.classList.remove('hidden')
 }
 
-function showMainPage() {
-  mainPosterSection.classList.remove('hidden')
-  posterFormSection.classList.add('hidden')
-}
-
-function showSavedPostersPage() {
-  savedPosterSection.classList.remove('hidden')
-  mainPosterSection.classList.add('hidden')
-}
-
-function backMainPage() {
-  mainPosterSection.classList.remove('hidden')
-  savedPosterSection.classList.add('hidden')
+function addHidden(element) {
+  element.classList.add('hidden')
 }
