@@ -12,6 +12,8 @@ let quoteElement = document.querySelector('.poster-quote');
 let posterImageURL = document.querySelector('#poster-image-url')
 let posterTitle = document.querySelector('#poster-title')
 let posterQuote = document.querySelector('#poster-quote')
+  // - Grid Element
+let savedPostersGrid = document.querySelector('.saved-posters-grid')
 //Section
 let posterFormSection = document.querySelector('.poster-form')
 let mainPosterSection = document.querySelector('.main-poster')
@@ -23,6 +25,8 @@ let showMainBtn = document.querySelector('.show-main')
 let showSavedBtn = document.querySelector('.show-saved')
 let backToMainBtn = document.querySelector('.back-to-main')
 let makePosterBtn = document.querySelector('.make-poster')
+let savePosterBtn = document.querySelector('.save-poster')
+
 
 
 
@@ -146,6 +150,7 @@ showMainBtn.addEventListener('click', function() {
 showSavedBtn.addEventListener('click', function() {
   removeHidden(savedPosterSection)
   addHidden(mainPosterSection)
+  addsPostersToGrid()
 })
 
 backToMainBtn.addEventListener('click',function() {
@@ -159,9 +164,9 @@ makePosterBtn.addEventListener('click', function(event) {
   createsUserPoster()
   removeHidden(mainPosterSection)
   addHidden(posterFormSection)
-  
-
 })  
+
+savePosterBtn.addEventListener('click', savingCurrentPoster)
 
 
 
@@ -210,7 +215,7 @@ function createsUserPoster() {
   currentPoster = createPoster(posterImageURL.value, posterTitle.value, posterQuote.value)
   updatesPosterDisplay(currentPoster)
 }
-
+// funtion that adds user inputed values to the corresponding array
 function addsToArrays() {
   if (posterImageURL.value && posterTitle.value && posterQuote.value) {
     images.push(posterImageURL.value);
@@ -223,6 +228,8 @@ function addsToArrays() {
 }
 
 
+
+
 // function isValidURL(input) {
 //   try {
 //     new URL(input)
@@ -231,4 +238,46 @@ function addsToArrays() {
 //     return false
 //   }
 // }
+
+// function needs to take our savedPosters array and display them as mini posters in the grid 
+// 
+
+
+function savingCurrentPoster() {
+  currentPoster = createPoster(imageElement.src, titleElement.innerText, quoteElement.innerText)
+
+  let catchingDuplicates = savedPosters.some(poster => poster.imageURL === currentPoster.imageURL && 
+    poster.title === currentPoster.title && 
+    poster.quote === currentPoster.quote)
+
+  if (!catchingDuplicates) {
+    savedPosters.push(currentPoster)
+    console.log("Poster saved!")
+  }
+  else
+    console.log("Duplicate poster detected, not saving.")
+}
+
+function addsPostersToGrid() {
+  savedPosters.forEach((poster) => {
+  let newDiv = document.createElement('div')
+  newDiv.classList.add('mini-poster')
+
+  let newImg = document.createElement('img')
+  newImg.src = poster.imageURL
+
+  let newQuote = document.createElement('h4')
+  newQuote.innerText = poster.quote.innerText
+
+  let newTitle = document.createElement('h2') 
+  newTitle.innerText = poster.title.innerText
+
+  savedPostersGrid.appendChild(newDiv)
+  newDiv.appendChild(newImg)
+  newDiv.appendChild(newTitle)
+  newDiv.appendChild(newQuote)
+})
+}
+
+
 
